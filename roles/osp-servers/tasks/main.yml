@@ -3,7 +3,7 @@
 - name: Create new server instances and attaches them a network and passes metadata to the instance
   os_server:
     cloud: ospcloud
-    name: "{{ name }}"
+    name: "{{ instance_name }}"
     image: rhel-guest
     meta: "group={{ group }},deployment_name={{ deployment }}"
     flavor: m2.small
