@@ -3,7 +3,7 @@
 - name: Create new server instances and attaches them a network and passes metadata to the instance
   os_server:
     cloud: ospcloud
-    name: "{{ instance_name }}"
+    name: "{{ name }}"
     image: rhel-guest
     meta: "group={{ group }},deployment_name={{ deployment }}"
     flavor: m2.small
@@ -25,10 +25,11 @@
     cloud: ospcloud
     state: present
     reuse: yes
-    server: "{{ instance_name }}"
+    server: "{{ name }}"
     network: ext_network
     wait: true
     timeout: 180
+  with_items: "{{ osp_servers }}"
   register: instancefloatingip
 - name: Show "{{ instanceip }}" public IP
   debug: var=instancefloatingip.floating_ip.floating_ip_address
@@ -38,4 +39,5 @@
     port: 22
     search_regex: OpenSSH
     timeout: 600
+  with_items: "{{ osp_servers }}"
   delegate_to: "{{ inventory_hostname }}"   
