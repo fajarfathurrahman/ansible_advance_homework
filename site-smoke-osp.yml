@@ -8,7 +8,6 @@
     register: openstack_info
     tags:
       - osp.smoke
-
   - name: Curl website
     uri:
       url: "http://{{item.public_v4}}"
@@ -18,14 +17,6 @@
     register: website
     tags:
       - osp.smoke
-
-  - name: Fail if Status Code is not 200
-    fail:
-    when: item.status != 200
-    with_items: 
-    - "{{ website.results }}"
-    tags:
-    - osp.smoke
 
   - name: Fail if 'Ansible has done its job' is not in the page content
     fail:
